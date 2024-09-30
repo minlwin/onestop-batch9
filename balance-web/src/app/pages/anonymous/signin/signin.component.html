@@ -16,11 +16,11 @@
 
   <!-- Buttons -->
   <div>
-    <button [class.disabled]="!form.valid" type="button" class="btn btn-primary me-2">
+    <button (click)="signIn()" [class.disabled]="!form.valid" type="button" class="btn btn-primary me-2">
       <i class="bi-unlock"></i> Sign In
     </button>
 
-    <a href="#" class="btn btn-outline-primary">
+    <a [routerLink]="['/anonymous', 'signup']" class="btn btn-outline-primary">
       <i class="bi-person-add"></i> Sign Up
     </a>
   </div>

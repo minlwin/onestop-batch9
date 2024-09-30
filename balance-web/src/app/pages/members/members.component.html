@@ -1,4 +1,46 @@
-<!-- Side Bar Menu -->
+<main class="main-view">
+  <!-- Side Bar Menu -->
+  <nav class="sidebar shadow">
+    <h4 class="title">My Balance</h4>
 
-<!-- Contents -->
-<router-outlet></router-outlet>
+    <ul>
+      <li>
+        <a href="#">
+          <i class="bi-house"></i> Home
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi-bar-chart"></i> Blance Report
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi-wallet"></i> Credit Reports
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi-cart"></i> Debit Reports
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi-key"></i> Change Password
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi-lock"></i> Sign Out
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- Contents -->
+  <article>
+    <router-outlet></router-outlet>
+  </article>
+
+</main>

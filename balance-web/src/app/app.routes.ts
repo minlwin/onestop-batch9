@@ -7,7 +7,7 @@ import { SignupComponent } from './pages/anonymous/signup/signup.component';
 export const routes: Routes = [
   {path: 'anonymous', component: AnonymousComponent, children: [
     {path: 'signin', component: SigninComponent},
-    {path: 'singup', component: SignupComponent},
+    {path: 'signup', component: SignupComponent},
     {path: '', redirectTo: '/anonymous/signin', pathMatch: 'full'}
   ]},
   {

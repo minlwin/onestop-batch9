@@ -1,3 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import '../node_modules/bootstrap-icons/font/bootstrap-icons';
+
+html, body, .main-view {
+  height: 100vh;
+}
+
+.main-view {
+  display: flex;
+}
+
+.sidebar {
+  width: 280px;
+}
+
+.sidebar > .title {
+  margin: 12px 20px;
+}
