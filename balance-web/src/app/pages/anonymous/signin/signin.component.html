@@ -1,0 +1,29 @@
+<!-- Title -->
+<h4>Member Sign In</h4>
+<p>Welcome to balance management system.</p>
+
+<!-- Sign In Form -->
+<form [formGroup]="form">
+  <!-- Login Id -->
+  <app-form-group label="Login Id" [valid]="form.get('username')?.valid">
+    <input formControlName="username" type="text" class="form-control" placeholder="Enter Login ID">
+  </app-form-group>
+
+  <!-- Password -->
+  <app-form-group label="Password" [valid]="form.get('password')?.valid">
+    <input formControlName="password" type="password" class="form-control" placeholder="Enter Password">
+  </app-form-group>
+
+  <!-- Buttons -->
+  <div>
+    <button [class.disabled]="!form.valid" type="button" class="btn btn-primary me-2">
+      <i class="bi-unlock"></i> Sign In
+    </button>
+
+    <a href="#" class="btn btn-outline-primary">
+      <i class="bi-person-add"></i> Sign Up
+    </a>
+  </div>
+
+</form>
+
