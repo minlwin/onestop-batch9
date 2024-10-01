@@ -10,10 +10,34 @@ html, body, .main-view {
   display: flex;
 }
 
+.main-view > article {
+  padding: 12px 20px;
+}
+
 .sidebar {
   width: 280px;
 }
 
 .sidebar > .title {
   margin: 12px 20px;
+}
+
+.sidebar > ul {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar > ul > li {
+  list-style: none;
+}
+
+.sidebar > ul > li > a {
+  display: block;
+  text-decoration: none;
+  color: gray;
+  padding: 8px 20px;
+}
+
+.sidebar > ul > li > a:hover {
+  background-color: skyblue;
 }

@@ -5,27 +5,32 @@
 
     <ul>
       <li>
-        <a href="#">
+        <a [routerLink]="['/members/home']" routerLinkActive="active" >
           <i class="bi-house"></i> Home
         </a>
       </li>
       <li>
-        <a href="#">
+        <a [routerLink]="['/members/report']" routerLinkActive="active">
           <i class="bi-bar-chart"></i> Blance Report
         </a>
       </li>
       <li>
-        <a href="#">
-          <i class="bi-wallet"></i> Credit Reports
+        <a [routerLink]="['/members/management/Credit']" routerLinkActive="active">
+          <i class="bi-wallet"></i> Credit Management
         </a>
       </li>
       <li>
-        <a href="#">
-          <i class="bi-cart"></i> Debit Reports
+        <a [routerLink]="['/members/management/Debit']" routerLinkActive="active">
+          <i class="bi-cart"></i> Debit Management
         </a>
       </li>
       <li>
-        <a href="#">
+        <a [routerLink]="['/members/ledger']" routerLinkActive="active">
+          <i class="bi-book"></i> Ledger Management
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/members/password']" routerLinkActive="active">
           <i class="bi-key"></i> Change Password
         </a>
       </li>
@@ -39,7 +44,7 @@
   </nav>
 
   <!-- Contents -->
-  <article>
+  <article class="w-100">
     <router-outlet></router-outlet>
   </article>
 
