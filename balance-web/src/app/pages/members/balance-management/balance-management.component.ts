@@ -1,10 +1,11 @@
 import { Component, computed, input } from '@angular/core';
 import { WidgetsModule } from '../../../widgets/widgets.module';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-balance-management',
   standalone: true,
-  imports: [WidgetsModule],
+  imports: [WidgetsModule, RouterLink],
   templateUrl: './balance-management.component.html',
   styles: ``
 })

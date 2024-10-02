@@ -23,7 +23,7 @@
         <i class="bi-search"></i> Search
       </button>
 
-      <a href="#" class="btn btn-primary ms-2">
+      <a [routerLink]="['../../edit', type()]" class="btn btn-primary ms-2">
         <i class="bi-plus"></i> Add New
       </a>
     </div>
@@ -50,7 +50,7 @@
         <td class="text-end">1</td>
         <td class="text-end">5,000</td>
         <td class="text-center">
-          <a href="#" class="icon-link">
+          <a [routerLink]="['..', '..', 'details', 1]" class="icon-link">
             <i class="bi-arrow-right"></i>
           </a>
         </td>

@@ -10,11 +10,11 @@ import { BalanceDetailsComponent } from "./balance-management/balance-details/ba
 export const routes:Routes = [
   {path: 'home', component: HomeComponent, title: "Home"},
   {path: 'report', component: BalanceReportComponent, title: "Report"},
-  {path: 'management/:type', title: "Management", children: [
-    {path: 'list', component: BalanceManagementComponent},
-    {path: 'edit', component: BalanceEditComponent},
-    {path: 'details', component: BalanceDetailsComponent},
-    {path: '', redirectTo: '/members/management/:type/list'}
+  {path: 'management', title: "Management", children: [
+    {path: 'details/:id', component: BalanceDetailsComponent},
+    {path: 'list/:type', component: BalanceManagementComponent},
+    {path: 'edit/:type', component: BalanceEditComponent},
+    {path: '', redirectTo: '/members/management/list/Debit', pathMatch: 'full'}
   ]},
   {path: 'ledger', component: LedgerManagementComponent, title: "Ledgers"},
   {path: 'password', component: ChangePasswordComponent, title: "Password"},

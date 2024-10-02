@@ -16,3 +16,50 @@
     </ul>
   </div>
 </div>
+
+<main class="container mt-3">
+
+  <form action="#" class="row">
+    <app-form-group label="Entry From" class="col-auto">
+      <input type="date" class="form-control">
+    </app-form-group>
+    <app-form-group label="Entry To" class="col-auto">
+      <input type="date" class="form-control">
+    </app-form-group>
+
+    <app-form-group label="Last Access From" class="col-auto">
+      <input type="date" class="form-control">
+    </app-form-group>
+    <app-form-group label="Last Access To" class="col-auto">
+      <input type="date" class="form-control">
+    </app-form-group>
+
+    <app-form-group label="Keyword" class="col-auto">
+      <input type="text" placeholder="Name or Email" class="form-control">
+    </app-form-group>
+
+    <div class="col btn-wrapper">
+      <button type="button" class="btn btn-outline-primary">
+        <i class="bi-search"></i> Search
+      </button>
+    </div>
+
+  </form>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Member</th>
+        <th>Email</th>
+        <th>Entry At</th>
+        <th>Last Access</th>
+        <th class="text-end">Ledgers</th>
+        <th class="text-end">Last Month Entries</th>
+        <th class="text-end">Entries</th>
+      </tr>
+    </thead>
+  </table>
+
+  <app-pagination></app-pagination>
+</main>
