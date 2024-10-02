@@ -1,9 +1,60 @@
 <app-page-content icon="bi-tags" title="Ledger Management">
 
   <!-- Search Bar -->
+  <form action="#" class="row">
+    <app-form-group label="Ledger Type" class="col-auto">
+      <select class="form-select">
+        <option value="">All Type</option>
+        <option value="Debit">Debit</option>
+        <option value="Credit">Credit</option>
+      </select>
+    </app-form-group>
+
+    <app-form-group label="Keyword" class="col-auto">
+      <input type="text" placeholder="Search Keyword" class="form-control">
+    </app-form-group>
+
+    <div class="btn-wrapper col">
+      <button class="btn btn-outline-primary">
+        <i class="bi-search"></i> Search
+      </button>
+
+      <a href="#" class="ms-2 btn btn-primary">
+        <i class="bi-plus"></i> Add New
+      </a>
+    </div>
+  </form>
 
   <!-- Table -->
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Ledger</th>
+        <th>Type</th>
+        <th class="text-end">Debit Total</th>
+        <th class="text-end">Credit Total</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>C001</td>
+        <td>Service Fees</td>
+        <td>Credit</td>
+        <td class="text-end"></td>
+        <td class="text-end">245,000</td>
+        <td class="text-center">
+          <a href="#" class="icon-link">
+            <i class="bi-pencil"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <!-- Pagination -->
+  <app-pagination></app-pagination>
 
 </app-page-content>
