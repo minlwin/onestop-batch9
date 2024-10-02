@@ -1,9 +1,56 @@
-<app-page-content icon="bi-house" title="Balance Report">
+<app-page-content icon="bi-bar-chart" title="Balance Report">
 
   <!-- Search Bar -->
+  <form action="#" class="row">
+    <!-- Date From -->
+    <app-form-group label="From" class="col-auto">
+      <input type="date" class="form-control">
+    </app-form-group>
+
+    <!-- Date To -->
+    <app-form-group label="To" class="col-auto">
+      <input type="date" class="form-control">
+    </app-form-group>
+
+    <!-- Ledger Code -->
+    <app-form-group label="Ledger" class="col-auto">
+      <input type="text" placeholder="Ledger Code" class="form-control">
+    </app-form-group>
+
+    <!-- Search Buttons -->
+    <div class="col btn-wrapper">
+      <button type="button" class="btn btn-outline-primary">
+        <i class="bi-search"></i> Search
+      </button>
+    </div>
+  </form>
 
   <!-- Table -->
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Date Time</th>
+        <th>Ledger</th>
+        <th>Particular</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>2024-10-02 10:00</td>
+        <td>General Usage</td>
+        <td>Water Fees</td>
+        <td>5,000</td>
+        <td></td>
+        <td>80,000</td>
+      </tr>
+    </tbody>
+  </table>
 
   <!-- Pagination -->
+  <app-pagination></app-pagination>
 
 </app-page-content>
