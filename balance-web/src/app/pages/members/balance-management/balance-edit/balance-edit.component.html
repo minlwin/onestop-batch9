@@ -1,1 +1,72 @@
-<app-page-content [title]="title()" [icon]="icon()"></app-page-content>
+<app-page-content [title]="title()" [icon]="icon()">
+
+  <form action="#">
+    <!-- Header -->
+    <div class="row">
+      <!-- Issue At -->
+      <app-form-group label="Issue At" class="col-3">
+        <input type="date" class="form-control">
+      </app-form-group>
+
+      <!-- Ledger Code -->
+      <app-form-group label="Ledger Code" class="col-3">
+        <input class="form-control" placeholder="Enter Ledger Code">
+      </app-form-group>
+
+      <!-- Account Name (Display Only) -->
+      <app-form-group label="Ledger Acccount" class="col">
+        <span class="form-control">Please enter ledger code</span>
+      </app-form-group>
+    </div>
+
+    <app-form-group label="Particular">
+      <textarea placeholder="Enter particular information." class="form-control" cols="80" rows="2"></textarea>
+    </app-form-group>
+
+    <!-- Entry Items -->
+    <h5>Entry Items</h5>
+
+    @for (item of items.controls; track $index) {
+      <div class="row">
+        <!-- Entry Info -->
+        <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Entry Info' : ''" class="col">
+          <input type="text" class="form-control" placeholder="Enter Entry Info">
+        </app-form-group>
+
+        <div class="col">
+          <div class="row">
+            <!-- Unit Price -->
+            <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Unit Price' : ''" class="col">
+              <input type="number" class="form-control">
+            </app-form-group>
+
+            <!-- Quantity -->
+            <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Quantity' : ''" class="col">
+              <input type="number" class="form-control">
+            </app-form-group>
+
+            <!-- Total -->
+            <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Total' : ''" class="col">
+              <span class="form-control">1000</span>
+            </app-form-group>
+
+          </div>
+        </div>
+      </div>
+
+    }
+
+    <div>
+      <!-- Add Entry Info -->
+      <button (click)="addItem()" type="button" class="btn btn-outline-primary">
+        <i class="bi-plus"></i> Add Item
+      </button>
+
+      <!-- Save Button -->
+      <button type="button" class="btn btn-primary ms-2">
+        <i class="bi-save"></i> Save
+      </button>
+    </div>
+  </form>
+
+</app-page-content>

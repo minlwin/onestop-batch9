@@ -1,1 +1,71 @@
-<p>balance-details works!</p>
+<app-page-content icon="bi-clipboard-pulse" title="Ledger Entry Details">
+
+  <!-- Header Information -->
+  <!-- Ledger (Code : Name) -->
+  <h6 class="mt-3">010 - Service Charges</h6>
+  <!-- Particular -->
+  <p>Service charges for Oversea applications.</p>
+
+  <div class="row">
+    <!-- Transaction ID (trxDate-seq) -->
+    <div class="col-3">
+      <div class="input-group">
+        <span class="input-group-text">Trx ID</span>
+        <span class="form-control">20241003-001</span>
+      </div>
+    </div>
+
+    <!-- Issue Date -->
+    <div class="col-3">
+      <div class="input-group">
+        <span class="input-group-text">Issue At</span>
+        <span class="form-control">10/01/2024</span>
+      </div>
+    </div>
+
+    <!-- Entry At -->
+    <div class="col-3">
+      <div class="input-group">
+        <span class="input-group-text">Entry At</span>
+        <span class="form-control">10/03/2024 10:00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Entry Items -->
+  <h6 class="mt-4">Entry Items</h6>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center column-seq">No</th>
+        <th>Entry Info</th>
+        <th class="text-end column-number">Unit Price</th>
+        <th class="text-end column-number">Qty</th>
+        <th class="text-end column-number">Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td class="text-center">1</td>
+        <td>Test Entry Data</td>
+        <td class="text-end">50,000</td>
+        <td class="text-end">20</td>
+        <td class="text-end">1,000,000</td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <th colspan="4" class="text-end">Debit Total</th>
+        <th class="text-end">1,000,000</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <a href="#" class="btn btn-primary">
+    <i class="bi-pencil"></i> Edit Entry
+  </a>
+
+</app-page-content>
