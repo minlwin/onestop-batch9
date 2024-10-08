@@ -28,6 +28,8 @@ export class BalanceEditComponent {
       particular: '',
       items: builder.array([])
     })
+
+    this.addItem()
   }
 
   get items():FormArray {
@@ -37,13 +39,36 @@ export class BalanceEditComponent {
   addItem() {
     this.items.push(this.builder.group({
       item: ['', Validators.required],
-      unitPrice: ['', Validators.required],
-      quantity: ['', Validators.required]
+      unitPrice: [0, Validators.required],
+      quantity: [0, Validators.required]
     }))
   }
 
-  getMbClass(index:number) {
-    const mbClass = (index < (this.items.controls.length - 1)) ? 'mb-2' : undefined
-    return mbClass
+  removeItem(index:number) {
+    this.items.removeAt(index)
+
+    if(this.items.controls.length == 0) {
+      this.addItem()
+    }
+  }
+
+  getItemTotal(index:number) {
+    const itemGroup = this.items.controls[index] as FormGroup
+    const unitPrice = itemGroup.get('unitPrice')?.value || 0
+    const quanitty = itemGroup.get('quantity')?.value || 0
+    return unitPrice * quanitty
+  }
+
+  getTotal() {
+    let total = 0
+
+    for(const item of this.items.controls) {
+      const itemGroup = item as FormGroup
+      const unitPrice = itemGroup.get('unitPrice')?.value || 0
+      const quanitty = itemGroup.get('quantity')?.value || 0
+      total += (unitPrice * quanitty)
+    }
+
+    return total
   }
 }

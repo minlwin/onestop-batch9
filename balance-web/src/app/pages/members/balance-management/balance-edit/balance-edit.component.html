@@ -1,6 +1,6 @@
 <app-page-content [title]="title()" [icon]="icon()">
 
-  <form action="#">
+  <form [formGroup]="form" >
     <!-- Header -->
     <div class="row">
       <!-- Issue At -->
@@ -26,35 +26,49 @@
     <!-- Entry Items -->
     <h5>Entry Items</h5>
 
-    @for (item of items.controls; track $index) {
-      <div class="row">
-        <!-- Entry Info -->
-        <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Entry Info' : ''" class="col">
-          <input type="text" class="form-control" placeholder="Enter Entry Info">
-        </app-form-group>
+    <div formArrayName="items" >
+      @for (item of items.controls; track $index) {
+        <div [formGroupName]="$index" class="row">
+          <!-- Entry Info -->
+          <app-form-group mb="mb-2" [label]="$index == 0 ? 'Entry Info' : ''" class="col">
+            <div class="input-group">
+              <button (click)="removeItem($index)" type="button" class="btn btn-outline-primary input-group-text">
+                <i class="bi bi-trash"></i>
+              </button>
+              <input type="text" formControlName="item" class="form-control" placeholder="Enter Entry Info">
+            </div>
+          </app-form-group>
 
-        <div class="col">
-          <div class="row">
-            <!-- Unit Price -->
-            <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Unit Price' : ''" class="col">
-              <input type="number" class="form-control">
-            </app-form-group>
+          <div class="col">
+            <div class="row">
+              <!-- Unit Price -->
+              <app-form-group mb="mb-2" [label]="$index == 0 ? 'Unit Price' : ''" class="col">
+                <input formControlName="unitPrice" type="number" class="form-control">
+              </app-form-group>
 
-            <!-- Quantity -->
-            <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Quantity' : ''" class="col">
-              <input type="number" class="form-control">
-            </app-form-group>
+              <!-- Quantity -->
+              <app-form-group mb="mb-2" [label]="$index == 0 ? 'Quantity' : ''" class="col">
+                <input formControlName="quantity" type="number" class="form-control">
+              </app-form-group>
 
-            <!-- Total -->
-            <app-form-group [mb]="getMbClass($index)" [label]="$index == 0 ? 'Total' : ''" class="col">
-              <span class="form-control">1000</span>
-            </app-form-group>
+              <!-- Total -->
+              <app-form-group mb="mb-2" [label]="$index == 0 ? 'Total' : ''" class="col">
+                <span class="form-control text-end">{{getItemTotal($index) | number}}</span>
+              </app-form-group>
 
+            </div>
           </div>
+        </div>
+      }
+
+      <div class="row">
+        <div class="offset-10 col-2 mb-3">
+          <span class="form-control text-end">{{getTotal() | number}}</span>
         </div>
       </div>
 
-    }
+    </div>
+
 
     <div>
       <!-- Add Entry Info -->
