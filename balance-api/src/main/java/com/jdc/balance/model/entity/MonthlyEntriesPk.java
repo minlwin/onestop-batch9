@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Embeddable
-public class MonthlyEntiriesPk {
+public class MonthlyEntriesPk {
 
 	private int year;
 

@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 public class LedgerEntry extends AbstractEntity {
 
 	@EmbeddedId
-	private LedgerEntryPK id;
+	private LedgerEntryPk id;
 
 	@ManyToOne(optional = false)
 	private LedgerAccount ledger;

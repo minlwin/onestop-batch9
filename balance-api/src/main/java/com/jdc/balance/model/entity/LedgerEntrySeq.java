@@ -13,4 +13,8 @@ public class LedgerEntrySeq {
 
 	private int seqNumber;
 
+	public void increment() {
+		seqNumber ++;
+	}
+
 }
