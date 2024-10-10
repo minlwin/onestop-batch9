@@ -10,7 +10,6 @@ import lombok.Data;
 public class LedgerEntrySeqPk {
 
 	private String accountId;
-
 	private LocalDate entryDate;
 
 }
