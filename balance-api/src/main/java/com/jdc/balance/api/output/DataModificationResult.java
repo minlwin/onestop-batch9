@@ -5,4 +5,7 @@ public record DataModificationResult<ID>(
 		String message
 		) {
 
+	public static<T> DataModificationResult<T> success(T id, String message) {
+		return new DataModificationResult<T>(id, message);
+	}
 }

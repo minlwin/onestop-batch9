@@ -24,7 +24,7 @@ public class LedgerAccount extends AbstractEntity {
 	private Account account;
 
 	@Column(nullable = false)
-	private String ladgerName;
+	private String ledger;
 
 	@Column(nullable = false)
 	private LedgerType type;

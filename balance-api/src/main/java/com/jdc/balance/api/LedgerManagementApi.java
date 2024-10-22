@@ -1,6 +1,6 @@
 package com.jdc.balance.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.balance.api.input.LedgerEditForm;
 import com.jdc.balance.api.input.LedgerSearch;
+import com.jdc.balance.api.input.LedgerUpdateForm;
 import com.jdc.balance.api.output.DataModificationResult;
 import com.jdc.balance.api.output.LedgerInfo;
 import com.jdc.balance.api.output.LedgerListItem;
 import com.jdc.balance.api.output.PageInfo;
 import com.jdc.balance.model.service.LedgerService;
+import com.jdc.balance.model.service.listener.LedgerChangesEvent;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("ledger")
 public class LedgerManagementApi {
 	
-	@Autowired
-	private LedgerService service;
+	private final LedgerService service;
+	private final ApplicationEventPublisher publisher;
 
 	@GetMapping
 	PageInfo<LedgerListItem> search(LedgerSearch search,
@@ -42,12 +47,16 @@ public class LedgerManagementApi {
 	@PostMapping
 	DataModificationResult<String> create(
 			@Validated @RequestBody LedgerEditForm form, BindingResult result) {
-		return service.create(form);
+		var modificationResult = service.create(form);
+		publisher.publishEvent(new LedgerChangesEvent(modificationResult.id()));
+		return modificationResult;
 	}
 	
 	@PutMapping("{code}")
 	DataModificationResult<String> udate(@PathVariable String code,
-			@Validated @RequestBody LedgerEditForm form, BindingResult result) {
-		return service.update(code, form);
+			@Validated @RequestBody LedgerUpdateForm form, BindingResult result) {
+		var modificationResult = service.update(code, form);
+		publisher.publishEvent(new LedgerChangesEvent(modificationResult.id()));
+		return modificationResult;
 	}
 }
