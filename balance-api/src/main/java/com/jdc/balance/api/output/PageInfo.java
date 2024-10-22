@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.jdc.balance.model.utils.PageLinksFactory;
+
 public record PageInfo<T>(
 		List<T> contents,
 		int totalPage,
@@ -21,12 +23,10 @@ public record PageInfo<T>(
 				.currentPage(page.getNumber())
 				.pageSize(page.getSize())
 				.totalPage(page.getTotalPages())
+				.links(PageLinksFactory.getPageLink(page.getTotalPages(), page.getNumber()))
 				.build();
 	}
-	
-	public static List<Integer> getPageLink(int totalPage, int current) {
-		return null;
-	}
+
 	
 	public static<T> Builder<T> builder() {
 		return new Builder<T>();
