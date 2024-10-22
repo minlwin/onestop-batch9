@@ -20,4 +20,15 @@ public class LedgerEntryItemPk {
 	@Column(name = "item_seq")
 	private int itemSeq;
 
+	public static LedgerEntryItemPk from(LedgerEntryPk id, int seq) {
+		
+		var pk = new LedgerEntryItemPk();
+		pk.setAccountId(id.getAccountId());
+		pk.setEntryDate(id.getEntryDate());
+		pk.setSeqNumber(id.getSeqNumber());
+		pk.setItemSeq(seq);
+		
+		return pk;
+	}
+
 }

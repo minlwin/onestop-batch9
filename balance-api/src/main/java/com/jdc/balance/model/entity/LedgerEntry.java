@@ -2,11 +2,13 @@ package com.jdc.balance.model.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -31,5 +33,8 @@ public class LedgerEntry extends AbstractEntity {
 
 	@Column(nullable = false)
 	private BigDecimal totalAmount;
+	
+	@OneToMany(mappedBy = "entry")
+	private List<LedgerEntryItem> items;
 
 }
