@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class AccountAccess {
+public class AccountActivity {
 
 	@Id
 	private String accountId;
@@ -20,5 +20,9 @@ public class AccountAccess {
 	private Account account;
 
 	private LocalDateTime lastAccess;
+	
+	private int lastMonthEntries;
+	private int totalEntries;
+	private int totalLedgers;
 
 }

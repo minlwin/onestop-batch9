@@ -1,13 +1,11 @@
 package com.jdc.balance.model.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,17 +31,8 @@ public class Account extends AbstractEntity {
 	private AccountBalance balance;
 	
 	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
-	private AccountAccess access;
+	private AccountActivity activity;
 	
-	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
-	private TotalEntries totalEntries;
-
-	@OneToMany(mappedBy = "account")
-	private List<MonthlyEntries> monthlyEntries;
-	
-	@OneToMany(mappedBy = "account")
-	private List<LedgerAccount> ledgers;
-
 	public enum Role {
 		Admin,
 		Member
