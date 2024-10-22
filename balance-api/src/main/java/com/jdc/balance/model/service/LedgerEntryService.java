@@ -2,6 +2,7 @@ package com.jdc.balance.model.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.function.Function;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +20,14 @@ import com.jdc.balance.model.entity.LedgerEntry;
 import com.jdc.balance.model.entity.LedgerEntryItem;
 import com.jdc.balance.model.entity.LedgerEntryItemPk;
 import com.jdc.balance.model.entity.LedgerEntryPk;
+import com.jdc.balance.model.entity.LedgerEntryPk_;
+import com.jdc.balance.model.entity.LedgerEntry_;
 import com.jdc.balance.model.repo.LedgerAccountRepo;
 import com.jdc.balance.model.repo.LedgerEntryItemRepo;
 import com.jdc.balance.model.repo.LedgerEntryRepo;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -39,8 +44,33 @@ public class LedgerEntryService {
 	private final LedgerEntrySeqGenerator seqGenerator;
 
 	public PageInfo<LedgerEntryInfo> search(LedgerEntrySearch search, int page, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		var loginUser = loginUserService.getLoginUser();
+		
+		Function<CriteriaBuilder, CriteriaQuery<LedgerEntryInfo>> queryFunc = cb -> {
+			var cq = cb.createQuery(LedgerEntryInfo.class);
+			var root = cq.from(LedgerEntry.class);
+			
+			LedgerEntryInfo.select(cb, cq, root);
+			cq.where(search.where(cb, root, loginUser.getEmail()));
+			
+			cq.orderBy(
+				cb.desc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.entryDate)),
+				cb.desc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.seqNumber))
+			);
+			
+			return cq;
+		};
+		
+		Function<CriteriaBuilder, CriteriaQuery<Long>> countFunc = cb -> {
+			var cq = cb.createQuery(Long.class);
+			var root = cq.from(LedgerEntry.class);
+			cq.select(cb.count(root.get(LedgerEntry_.id)));
+			cq.where(search.where(cb, root, loginUser.getEmail()));
+			return cq;
+		};
+
+		return PageInfo.from(entryRepo.search(queryFunc, countFunc, page, size));
 	}
 
 	public LedgerEntryDetails findById(String trxId) {

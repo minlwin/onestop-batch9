@@ -16,12 +16,12 @@ public class AccountSecurityService {
 		return null;
 	}
 
-	public SecurityInfo signIn(SignInForm form) {
+	public SecurityInfo signUp(SignUpForm form) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public SecurityInfo signUp(SignUpForm form) {
+	public SecurityInfo signIn(SignInForm form) {
 		// TODO Auto-generated method stub
 		return null;
 	}
