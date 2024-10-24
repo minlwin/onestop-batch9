@@ -2,6 +2,7 @@ package com.jdc.balance.model.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,11 +28,21 @@ public class Account extends AbstractEntity {
 
 	private LocalDateTime entryAt;
 	
-	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private AccountBalance balance;
 	
-	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private AccountActivity activity;
+	
+	public void setBalance(AccountBalance balance) {
+		this.balance = balance;
+		balance.setAccount(this);
+	}
+	
+	public void setActivity(AccountActivity activity) {
+		this.activity = activity;
+		activity.setAccount(this);
+	}
 	
 	public enum Role {
 		Admin,

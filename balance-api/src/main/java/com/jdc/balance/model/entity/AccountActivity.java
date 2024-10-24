@@ -19,7 +19,7 @@ public class AccountActivity {
 	@MapsId("accountId")
 	private Account account;
 
-	private LocalDateTime lastAccess;
+	private LocalDateTime lastAccess = LocalDateTime.now();
 	
 	private int lastMonthEntries;
 	private int totalEntries;

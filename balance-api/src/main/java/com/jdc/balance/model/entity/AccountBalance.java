@@ -21,6 +21,6 @@ public class AccountBalance extends AbstractEntity {
 	@MapsId("accountId")
 	private Account account;
 	
-	private BigDecimal amount;
+	private BigDecimal amount = BigDecimal.ZERO;
 
 }
