@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.util.StringUtils;
 
 import com.jdc.balance.model.entity.Account;
+import com.jdc.balance.model.entity.Account.Role;
 import com.jdc.balance.model.entity.AccountActivity_;
 import com.jdc.balance.model.entity.Account_;
 
@@ -24,6 +25,8 @@ public record AccountSearch(
 	public Predicate[] where(CriteriaBuilder cb, Root<Account> root) {
 		
 		var list = new ArrayList<Predicate>();
+		
+		list.add(cb.equal(root.get(Account_.role), Role.Member));
 		
 		var activity = root.join(Account_.activity, JoinType.LEFT);
 		

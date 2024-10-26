@@ -48,6 +48,10 @@ public class AccountSecurityService {
 	@Transactional
 	public SecurityInfo signUp(SignUpForm form) {
 		
+		if(accountRepo.findById(form.username()).isPresent()) {
+			throw new ApiBusinessException("Your account is already registered. Please check your email.");
+		}
+		
 		var account = accountRepo.save(form.entity(passwordEncoder::encode));
 		var authentication = authenticationManager.authenticate(form.authentication());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -67,7 +71,7 @@ public class AccountSecurityService {
 	}
 
 	public SecurityInfo refresh(RefreshForm form) {
-		var authentication = tokenProvider.parse(form.token());
+		var authentication = tokenProvider.parse(form.token(), Type.Refresh);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		var account = accountRepo.findById(authentication.getName())

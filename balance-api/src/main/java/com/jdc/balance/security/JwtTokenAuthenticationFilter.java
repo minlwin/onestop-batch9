@@ -6,6 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.jdc.balance.security.JwtTokenProvider.Type;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +26,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 		
 		var token = request.getHeader("Authorization");
 		
-		var authentication = tokenProvider.parse(token);
+		var authentication = tokenProvider.parse(token, Type.Access);
 		
 		if(null != authentication) {
 			SecurityContextHolder.getContext().setAuthentication(authentication);

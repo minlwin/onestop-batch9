@@ -37,10 +37,10 @@ public record LedgerListItem(
 	}
 
 	public Long getCreditTotal() {
-		return type == LedgerType.Credit ? total : null;
+		return type == LedgerType.Credit ? total : 0;
 	}
 	
 	public Long getDebitTotal() {
-		return type == LedgerType.Debit ? total : null;
+		return type == LedgerType.Debit ? total : 0;
 	}
 }

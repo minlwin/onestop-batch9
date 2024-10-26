@@ -28,20 +28,22 @@ public class Account extends AbstractEntity {
 
 	private LocalDateTime entryAt;
 	
-	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private AccountBalance balance;
 	
-	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private AccountActivity activity;
 	
 	public void setBalance(AccountBalance balance) {
 		this.balance = balance;
 		balance.setAccount(this);
+		balance.setAccountId(email);
 	}
 	
 	public void setActivity(AccountActivity activity) {
 		this.activity = activity;
 		activity.setAccount(this);
+		activity.setAccountId(email);
 	}
 	
 	public enum Role {

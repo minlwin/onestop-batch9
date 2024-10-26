@@ -31,7 +31,7 @@ public class JwtTokenProvider {
 		Access, Refresh
 	}
 
-	public Authentication parse(String token) {
+	public Authentication parse(String token, Type checkType) {
 		
 		try {
 			if(StringUtils.hasLength(token)) {
@@ -43,7 +43,7 @@ public class JwtTokenProvider {
 				
 				var type = jwt.getPayload().get("type");
 				
-				if(null == type || !type.equals(Type.Access.name())) {
+				if(null == type || !type.equals(checkType.name())) {
 					throw new JwtTokenInvalidateException("Invalid token type.", null);
 				}
 				

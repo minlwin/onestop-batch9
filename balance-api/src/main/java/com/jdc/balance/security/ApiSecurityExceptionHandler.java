@@ -18,18 +18,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiSecurityExceptionHandler implements AccessDeniedHandler, AuthenticationEntryPoint{
 	
-	private final HandlerExceptionResolver exceptionResolver;
+	private final HandlerExceptionResolver handlerExceptionResolver;
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		exceptionResolver.resolveException(request, response, null, accessDeniedException);
+		handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
 	}
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		exceptionResolver.resolveException(request, response, null, authException);
+		handlerExceptionResolver.resolveException(request, response, null, authException);
 	}
 
 }

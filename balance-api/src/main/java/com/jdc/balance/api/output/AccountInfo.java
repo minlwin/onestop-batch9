@@ -15,9 +15,9 @@ public record AccountInfo(
 		String email,
 		LocalDateTime entryAt,
 		LocalDateTime lastAccessAt,
-		long ledgers,
-		long lastMonthEntry,
-		long totalEntry) {
+		Integer ledgers,
+		Integer lastMonthEntry,
+		Integer totalEntry) {
 
 	public static void select(CriteriaQuery<AccountInfo> cq, Root<Account> root) {
 		
