@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, effect } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { LoginUserState } from './services/security/login-user.state';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,18 @@ import { RouterOutlet } from '@angular/router';
   styles: [],
 })
 export class AppComponent {
-  title = 'balance-web';
+
+  constructor(loginUserSate:LoginUserState, router:Router) {
+    effect(() => {
+      const role = loginUserSate.role()
+
+      if(role == "Member") {
+        router.navigate(['/member'])
+      } else if(role == "Admin") {
+        router.navigate(['/admin'])
+      } else {
+        router.navigate(['/anonymous'])
+      }
+    })
+  }
 }
