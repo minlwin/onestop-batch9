@@ -9,19 +9,12 @@ export class LoginUserState {
   user = signal<LoginUser | undefined>(undefined)
   role = computed(() => this.user()?.role)
 
-  constructor(security:SecurityService) {
+  constructor() {
     const storageData = localStorage.getItem(LOGINUSER)
 
     if(storageData) {
       const loginUser:LoginUser = JSON.parse(storageData)
-
-      security.validate({type: 'Refresh', token: loginUser.refreshToken}).subscribe(result => {
-        if(result.valid) {
-          security.refresh({token: loginUser.refreshToken}).subscribe(refreshed => {
-            this.setUser(refreshed)
-          })
-        }
-      })
+      this.user.set(loginUser)
     }
   }
 

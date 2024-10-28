@@ -15,6 +15,7 @@ declare const bootstrap:any
 export class AppComponent implements AfterViewInit{
 
   messages = computed(() => this.errorService.errors())
+  needToLogin = computed(() => this.errorService.needToLogin())
 
   errorDialog:any
 
@@ -25,13 +26,14 @@ export class AppComponent implements AfterViewInit{
     private errorService:GlobalErrorService
   ) {
     effect(() => {
+      if(this.needToLogin()) {
+        router.navigate(['/anonymous'])
+      }
 
       if(this.messages()) {
         this.errorDialog?.show()
-      } else {
-        if(loginUserSate.role() == undefined) {
+      } else if(loginUserSate.role() == undefined) {
           router.navigate(['/anonymous'])
-        }
       }
     })
   }

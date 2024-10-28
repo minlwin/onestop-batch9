@@ -3,7 +3,7 @@ import { WidgetsModule } from '../../../widgets/widgets.module';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LedgerManagementService } from '../../../services/api/ledger-management.service';
-import { PageInfo } from '../../../services/api';
+import { PageInfo } from '../../../services/commons';
 import { CommonModule } from '@angular/common';
 import { PagerComponent } from '../../../widgets/pagination/pagination.component';
 

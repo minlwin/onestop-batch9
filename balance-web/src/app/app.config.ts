@@ -4,15 +4,16 @@ import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angula
 import { routes } from './app.routes';
 import { AppTitleService } from './services/commons/app-title.service';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { tokensInterceptor } from './services/security/tokens.interceptor';
+import { tokenAccessInterceptor } from './services/security/token-access.interceptor';
 import { GlobalErrorService } from './services/commons/global-error.service';
+import { tokenRefreshInterceptor } from './services/security/token-refresh.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {provide: TitleStrategy, useClass: AppTitleService},
+    {provide: ErrorHandler, useClass: GlobalErrorService},
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([tokensInterceptor])),
-    {provide: TitleStrategy, useClass: AppTitleService},
-    {provide: ErrorHandler, useClass: GlobalErrorService}
+    provideHttpClient(withInterceptors([tokenAccessInterceptor, tokenRefreshInterceptor])),
   ]
 };

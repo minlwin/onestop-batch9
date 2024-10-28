@@ -1,5 +1,5 @@
 import { Component, computed, EventEmitter, input, Output } from '@angular/core';
-import { PageInfo } from '../../services/api';
+import { PageInfo } from '../../services/commons';
 
 @Component({
   selector: 'app-pagination',

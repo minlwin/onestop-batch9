@@ -7,7 +7,7 @@
         <!-- Page Select -->
         <div class="input-group">
           <span class="input-group-text">Page Size</span>
-          <select class="form-select">
+          <select #sizeSelect (change)="changeSize(sizeSelect.value)" class="form-select">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>

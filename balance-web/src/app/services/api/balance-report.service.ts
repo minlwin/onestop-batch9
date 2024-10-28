@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { PageInfo } from ".";
+import { PageInfo } from "../commons";
 
 const URL = `${environment.baseUrl}/report`
 

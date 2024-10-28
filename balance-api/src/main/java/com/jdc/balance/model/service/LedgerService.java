@@ -54,6 +54,10 @@ public class LedgerService {
 	@Transactional
 	public DataModificationResult<String> create(LedgerEditForm form) {
 		
+		if(ledgerAccountRepo.findById(form.code()).isPresent()) {
+			throw new ApiBusinessException("Ledger code is already used, please choose other codes.");
+		}
+		
 		var entity = form.entity();
 		entity.setAccount(loginUserService.getLoginUser());
 		

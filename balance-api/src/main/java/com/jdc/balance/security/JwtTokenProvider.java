@@ -19,7 +19,9 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
@@ -32,12 +34,15 @@ public class JwtTokenProvider {
 	}
 
 	public Authentication parse(String token, Type checkType) {
-		
+
+		log.info("Token Type : {}", checkType);
+		log.info("Token Value : {}", token);
+
 		try {
 			if(StringUtils.hasLength(token)) {
 				var jwt = Jwts.parser()
-						.requireIssuer(tokenProperties.getIssuer())
 						.verifyWith(key)
+						.requireIssuer(tokenProperties.getIssuer())
 						.build()
 						.parseSignedClaims(token);
 				
@@ -57,6 +62,9 @@ public class JwtTokenProvider {
 		} catch (ExpiredJwtException e) {
 			throw new JwtTokenExpirationException("Access token is expired. Please refresh token again.", e);
 		} catch (JwtException e) {
+			log.error("Token Type : {}", checkType);
+			log.error("Token Value : {}", token);
+			log.error("Token Invalidation Error", e);
 			throw new JwtTokenInvalidateException(e.getMessage(), e);
 		}
 		

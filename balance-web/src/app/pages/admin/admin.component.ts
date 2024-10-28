@@ -2,7 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { WidgetsModule } from '../../widgets/widgets.module';
 import { LoginUserState } from '../../services/security/login-user.state';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { PageInfo } from '../../services/api';
+import { PageInfo } from '../../services/commons';
 import { AccountManagementService } from '../../services/api/account-management.service';
 import { PagerComponent } from '../../widgets/pagination/pagination.component';
 

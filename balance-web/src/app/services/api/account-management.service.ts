@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PageInfo } from ".";
+import { PageInfo } from "../commons";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 
