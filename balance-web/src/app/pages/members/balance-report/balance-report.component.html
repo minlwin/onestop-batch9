@@ -1,56 +1,63 @@
 <app-page-content icon="bi-bar-chart" title="Balance Report">
 
   <!-- Search Bar -->
-  <form action="#" class="row">
+  <form [formGroup]="form" class="row">
     <!-- Date From -->
     <app-form-group label="From" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="from" type="date" class="form-control">
     </app-form-group>
 
     <!-- Date To -->
     <app-form-group label="To" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="to" type="date" class="form-control">
     </app-form-group>
 
     <!-- Ledger Code -->
     <app-form-group label="Ledger" class="col-auto">
-      <input type="text" placeholder="Ledger Code" class="form-control">
+      <input formControlName="ledger" type="text" placeholder="Ledger Code" class="form-control">
     </app-form-group>
 
     <!-- Search Buttons -->
     <div class="col btn-wrapper">
-      <button type="button" class="btn btn-outline-primary">
+      <button (click)="search()" type="button" class="btn btn-outline-primary">
         <i class="bi-search"></i> Search
       </button>
     </div>
   </form>
 
   <!-- Table -->
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Ledger</th>
-        <th>Particular</th>
-        <th class="text-end">Debit</th>
-        <th class="text-end">Credit</th>
-        <th class="text-end">Balance</th>
-      </tr>
-    </thead>
+  @if (contents().length > 0) {
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Ledger</th>
+          <th>Particular</th>
+          <th class="text-end">Debit</th>
+          <th class="text-end">Credit</th>
+          <th class="text-end">Balance</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr>
-        <td>2024-10-02</td>
-        <td>General Usage</td>
-        <td>Water Fees</td>
-        <td class="text-end">5,000</td>
-        <td class="text-end"></td>
-        <td class="text-end">80,000</td>
-      </tr>
-    </tbody>
-  </table>
-
+      <tbody>
+        @for (item of contents(); track $index) {
+          <tr>
+            <td>{{item.issueAt}}</td>
+            <td>{{`${item.ledgerCode} : ${item.ledgerAccountName}}}</td>
+            <td>{{item.particular}}</td>
+            <td class="text-end">{{item.debit | number}}</td>
+            <td class="text-end">{{item.credit | number}}</td>
+            <td class="text-end">{{item.balance | number}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <div class="alert alert-info">
+      There is no data.
+    </div>
+  }
   <!-- Pagination -->
-  <app-pagination></app-pagination>
+  <app-pagination [pageInfo]="pageInfo()"></app-pagination>
 
 </app-page-content>
