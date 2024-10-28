@@ -8,7 +8,7 @@
 
       <div class="modal-body">
         <app-form-group label="Type" [valid]="form.get('type')?.valid">
-          <select formControlName="type" class="form-select">
+          <select [attr.disabled]="update()" formControlName="type" class="form-select">
             <option value="">Select Type</option>
             <option value="Debit">Debit</option>
             <option value="Credit">Credit</option>
@@ -16,7 +16,7 @@
         </app-form-group>
 
         <app-form-group label="Code" [valid]="form.get('code')?.valid">
-          <input formControlName="code" type="text" class="form-control" placeholder="Enter Ledger Code">
+          <input [attr.disabled]="update()" formControlName="code" type="text" class="form-control" placeholder="Enter Ledger Code">
         </app-form-group>
 
         <app-form-group label="Account Name" [valid]="form.get('accountName')?.valid">
