@@ -31,7 +31,12 @@ export class SigninComponent {
     if(this.form.valid) {
       this.service.signIn(this.form.value).subscribe(result => {
         this.loginUserState.setUser(result)
-        this.router.navigate(['/'])
+
+        if(result.role == "Admin") {
+          this.router.navigate(['/admin'])
+        } else if(result.role == "Member") {
+          this.router.navigate(['/members'])
+        }
       })
     }
   }

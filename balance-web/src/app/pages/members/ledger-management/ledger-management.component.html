@@ -19,7 +19,7 @@
         <i class="bi-search"></i> Search
       </button>
 
-      <a href="#" class="ms-2 btn btn-primary">
+      <a (click)="addNew()" class="ms-2 btn btn-primary">
         <i class="bi-plus"></i> Add New
       </a>
     </div>
@@ -56,5 +56,7 @@
 
   <!-- Pagination -->
   <app-pagination></app-pagination>
+
+  <app-ledger-edit></app-ledger-edit>
 
 </app-page-content>

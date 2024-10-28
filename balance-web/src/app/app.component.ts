@@ -1,6 +1,9 @@
-import { Component, effect } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ErrorHandler, Inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoginUserState } from './services/security/login-user.state';
+import { GlobalErrorService } from './services/commons/global-error.service';
+
+declare const bootstrap:any
 
 @Component({
   selector: 'app-root',
@@ -9,19 +12,31 @@ import { LoginUserState } from './services/security/login-user.state';
   templateUrl: './app.component.html',
   styles: [],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit{
 
-  constructor(loginUserSate:LoginUserState, router:Router) {
+  messages = computed(() => this.errorService.errors())
+
+  errorDialog:any
+
+  constructor(
+    loginUserSate:LoginUserState,
+    router:Router,
+    @Inject(ErrorHandler)
+    private errorService:GlobalErrorService
+  ) {
     effect(() => {
-      const role = loginUserSate.role()
 
-      if(role == "Member") {
-        router.navigate(['/member'])
-      } else if(role == "Admin") {
-        router.navigate(['/admin'])
+      if(this.messages()) {
+        this.errorDialog?.show()
       } else {
-        router.navigate(['/anonymous'])
+        if(loginUserSate.role() == undefined) {
+          router.navigate(['/anonymous'])
+        }
       }
     })
   }
+  ngAfterViewInit(): void {
+    this.errorDialog = new bootstrap.Modal('#errorDialog')
+  }
+
 }

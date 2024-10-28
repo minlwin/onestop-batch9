@@ -1,1 +1,35 @@
-<p>ledger-edit works!</p>
+<div class="modal fade" id="ledgerEdit">
+  <div class="modal-dialog">
+    <form [formGroup]="form" class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Ledger</h5>
+      </div>
+
+      <div class="modal-body">
+        <app-form-group label="Type" [valid]="form.get('type')?.valid">
+          <select formControlName="type" class="form-select">
+            <option value="">Select Type</option>
+            <option value="Debit">Debit</option>
+            <option value="Credit">Credit</option>
+          </select>
+        </app-form-group>
+
+        <app-form-group label="Code" [valid]="form.get('code')?.valid">
+          <input formControlName="code" type="text" class="form-control" placeholder="Enter Ledger Code">
+        </app-form-group>
+
+        <app-form-group label="Account Name" [valid]="form.get('accountName')?.valid">
+          <input formControlName="accountName" type="text" class="form-control" placeholder="Enter Account Name">
+        </app-form-group>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">
+          <i class="bi-save"></i> Save
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

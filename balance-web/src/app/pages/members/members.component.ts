@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { LoginUserState } from '../../services/security/login-user.state';
 
 @Component({
   selector: 'app-members',
@@ -10,4 +11,11 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 })
 export class MembersComponent {
 
+  constructor(private loginUser:LoginUserState, private router:Router) {
+  }
+
+  signOut() {
+    this.loginUser.signOut()
+    this.router.navigate(['/anonymous'])
+  }
 }
