@@ -1,52 +1,55 @@
-<section class="d-flex justify-content-between">
+@if (show()) {
 
-  <div class="row">
-    <div class="col-auto">
-      <!-- Page Select -->
-      <div class="input-group">
-        <span class="input-group-text">Page Size</span>
-        <select class="form-select">
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-        </select>
+  <section class="d-flex justify-content-between">
+
+    <div class="row">
+      <div class="col-auto">
+        <!-- Page Select -->
+        <div class="input-group">
+          <span class="input-group-text">Page Size</span>
+          <select class="form-select">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col page-links">
+        <!-- Top Page -->
+        <a href="#" class="btn btn-outline-primary">
+          <i class="bi-arrow-left"></i>
+        </a>
+
+        <!-- Page Links -->
+        <a href="#" class="btn btn-outline-primary">9</a>
+        <a href="#" class="btn btn-primary">10</a>
+        <a href="#" class="btn btn-outline-primary">11</a>
+
+        <!-- Last Page -->
+        <a href="#" class="btn btn-outline-primary">
+          <i class="bi-arrow-right"></i>
+        </a>
+
       </div>
     </div>
 
-    <div class="col page-links">
-      <!-- Top Page -->
-      <a href="#" class="btn btn-outline-primary">
-        <i class="bi-arrow-left"></i>
-      </a>
+    <div class="row gx-2">
+      <!-- Total Page / Total Count -->
+      <div class="col">
+        <div class="input-group">
+          <span class="input-group-text">Pages</span>
+          <span class="form-control">20</span>
+        </div>
+      </div>
 
-      <!-- Page Links -->
-      <a href="#" class="btn btn-outline-primary">9</a>
-      <a href="#" class="btn btn-primary">10</a>
-      <a href="#" class="btn btn-outline-primary">11</a>
-
-      <!-- Last Page -->
-      <a href="#" class="btn btn-outline-primary">
-        <i class="bi-arrow-right"></i>
-      </a>
-
-    </div>
-  </div>
-
-  <div class="row gx-2">
-    <!-- Total Page / Total Count -->
-    <div class="col">
-      <div class="input-group">
-        <span class="input-group-text">Pages</span>
-        <span class="form-control">20</span>
+      <div class="col">
+        <div class="input-group">
+          <span class="input-group-text">Count</span>
+          <span class="form-control">198</span>
+        </div>
       </div>
     </div>
 
-    <div class="col">
-      <div class="input-group">
-        <span class="input-group-text">Count</span>
-        <span class="form-control">198</span>
-      </div>
-    </div>
-  </div>
-
-</section>
+  </section>
+}

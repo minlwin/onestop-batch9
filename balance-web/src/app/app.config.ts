@@ -3,13 +3,14 @@ import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angula
 
 import { routes } from './app.routes';
 import { AppTitleService } from './services/commons/app-title.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { tokensInterceptor } from './services/security/tokens.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     {provide: TitleStrategy, useClass: AppTitleService},
-    provideHttpClient()
+    provideHttpClient(withInterceptors([tokensInterceptor]))
   ]
 };

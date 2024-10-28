@@ -29,6 +29,11 @@ export class LoginUserState {
     this.user.set(user)
     localStorage.setItem(LOGINUSER, JSON.stringify(user))
   }
+
+  signOut() {
+    this.user.set(undefined)
+    localStorage.removeItem(LOGINUSER)
+  }
 }
 
 export interface LoginUser {

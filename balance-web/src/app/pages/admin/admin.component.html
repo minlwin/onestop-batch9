@@ -9,7 +9,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a (click)="signOut()" class="nav-link">
           <i class="bi-lock"></i> Sign Out
         </a>
       </li>
@@ -19,47 +19,69 @@
 
 <main class="container mt-3">
 
-  <form action="#" class="row">
+  <form [formGroup]="form" class="row">
     <app-form-group label="Entry From" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="entryFrom" type="date" class="form-control">
     </app-form-group>
+
     <app-form-group label="Entry To" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="entryTo" type="date" class="form-control">
     </app-form-group>
 
     <app-form-group label="Last Access From" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="lastAccessFrom" type="date" class="form-control">
     </app-form-group>
+
     <app-form-group label="Last Access To" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="lastAccessTo" type="date" class="form-control">
     </app-form-group>
 
     <app-form-group label="Keyword" class="col-auto">
-      <input type="text" placeholder="Name or Email" class="form-control">
+      <input formControlName="keyword" type="text" placeholder="Name or Email" class="form-control">
     </app-form-group>
 
     <div class="col btn-wrapper">
-      <button type="button" class="btn btn-outline-primary">
+      <button (click)="search()" type="button" class="btn btn-outline-primary">
         <i class="bi-search"></i> Search
       </button>
     </div>
 
   </form>
 
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Member</th>
-        <th>Email</th>
-        <th>Entry At</th>
-        <th>Last Access</th>
-        <th class="text-end">Ledgers</th>
-        <th class="text-end">Last Month Entries</th>
-        <th class="text-end">Entries</th>
-      </tr>
-    </thead>
-  </table>
+  @if (content().length > 0) {
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Member</th>
+          <th>Email</th>
+          <th>Entry At</th>
+          <th>Last Access</th>
+          <th class="text-end">Ledgers</th>
+          <th class="text-end">Last Month Entries</th>
+          <th class="text-end">Entries</th>
+        </tr>
+      </thead>
 
-  <app-pagination></app-pagination>
+      <tbody>
+        @for (item of content(); track $index) {
+          <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.entryAt}}</td>
+            <td>{{item.lastAccessAt}}</td>
+            <td>{{item.ledgers}}</td>
+            <td>{{item.lastMonthEntry}}</td>
+            <td>{{item.totalEntry}}</td>
+          </tr>
+        }
+      </tbody>
+
+    </table>
+  } @else {
+    <div class="alert alert-info">
+      There is no data.
+    </div>
+  }
+
+  <app-pagination [pageInfo]="pageInfo()"></app-pagination>
 </main>
