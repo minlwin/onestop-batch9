@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, signal } from '@angular/core';
 import { WidgetsModule } from '../../../../widgets/widgets.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -14,8 +14,12 @@ declare const bootstrap:any
 export class LedgerEditComponent implements AfterViewInit{
 
   form:FormGroup
+  update = signal<boolean>(false)
 
   dialog:any
+
+  @Output()
+  onSave = new EventEmitter
 
   constructor(builder:FormBuilder) {
     this.form = builder.group({
@@ -36,6 +40,7 @@ export class LedgerEditComponent implements AfterViewInit{
       })
     }
     this.dialog?.show()
+    this.update.set(data != undefined)
   }
 
   hide() {
@@ -44,5 +49,11 @@ export class LedgerEditComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     this.dialog = new bootstrap.Modal('#ledgerEdit')
+  }
+
+  save() {
+    if(this.form.valid) {
+      this.onSave.emit(this.form.value)
+    }
   }
 }

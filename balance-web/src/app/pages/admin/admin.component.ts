@@ -4,6 +4,7 @@ import { LoginUserState } from '../../services/security/login-user.state';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PageInfo } from '../../services/api';
 import { AccountManagementService } from '../../services/api/account-management.service';
+import { PagerComponent } from '../../widgets/pagination/pagination.component';
 
 @Component({
   selector: 'app-admin',
@@ -12,7 +13,7 @@ import { AccountManagementService } from '../../services/api/account-management.
   templateUrl: './admin.component.html',
   styles: ``
 })
-export class AdminComponent {
+export class AdminComponent implements PagerComponent{
 
   form:FormGroup
   pageInfo = signal<PageInfo | undefined>(undefined)
@@ -33,6 +34,16 @@ export class AdminComponent {
       })
 
       this.search()
+  }
+
+  onLinkChange(page: number): void {
+    this.form.patchValue({page: page})
+    this.search()
+  }
+
+  onSizeChange(size: number): void {
+    this.form.patchValue({size: size, page: 0})
+    this.search()
   }
 
   search() {

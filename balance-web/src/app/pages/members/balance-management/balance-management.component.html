@@ -1,20 +1,20 @@
 <app-page-content [icon]="icon()" [title]="title()">
 
   <!-- Search Bar -->
-  <form action="#" class="row">
+  <form [formGroup]="form" class="row">
     <!-- Date From -->
     <app-form-group label="From" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="from" type="date" class="form-control">
     </app-form-group>
 
     <!-- Date To -->
     <app-form-group label="To" class="col-auto">
-      <input type="date" class="form-control">
+      <input formControlName="to" type="date" class="form-control">
     </app-form-group>
 
     <!-- Ledger Code -->
     <app-form-group label="Ledger" class="col-auto">
-      <input type="text" placeholder="Ledger Code" class="form-control">
+      <input formControlName="ledger" type="text" placeholder="Ledger Code" class="form-control">
     </app-form-group>
 
     <!-- Search Buttons -->
@@ -30,37 +30,45 @@
   </form>
 
   <!-- Table -->
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Trx ID</th>
-        <th>Issue At</th>
-        <th>Ledger</th>
-        <th>Particular</th>
-        <th class="text-end">Items</th>
-        <th class="text-end">Amount</th>
-        <th class="text-center"></th>
-      </tr>
-    </thead>
+  @if (contents().length > 0) {
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Trx ID</th>
+          <th>Issue At</th>
+          <th>Ledger</th>
+          <th>Particular</th>
+          <th class="text-end">Items</th>
+          <th class="text-end">Amount</th>
+          <th class="text-center"></th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr>
-        <td>yyyyMMdd-00</td>
-        <td>2024-10-02</td>
-        <td>General Usage</td>
-        <td>Water Fees</td>
-        <td class="text-end">1</td>
-        <td class="text-end">5,000</td>
-        <td class="text-center">
-          <a [routerLink]="['../../', 'details', 1]" class="icon-link">
-            <i class="bi-arrow-right"></i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody>
+        @for (item of contents(); track $index) {
+          <tr>
+            <td>{{item.trxId}}</td>
+            <td>{{item.issueAt}}</td>
+            <td>{{item.ledger}}</td>
+            <td>{{item.particular}}</td>
+            <td class="text-end">{{item.items}}</td>
+            <td class="text-end">{{item.amount | number}}</td>
+            <td class="text-center">
+              <a [routerLink]="['../../', 'details', item.trxId]" class="icon-link">
+                <i class="bi-arrow-right"></i>
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <div class="alert alert-info">
+      There is no data.
+    </div>
+  }
 
   <!-- Pagination -->
-  <app-pagination></app-pagination>
+  <app-pagination [pageInfo]="pageInfo()"></app-pagination>
 
 </app-page-content>

@@ -17,17 +17,17 @@
 
       <div class="col page-links">
         <!-- Top Page -->
-        <a href="#" class="btn btn-outline-primary">
+        <a (click)="clickLink(0)" class="btn btn-outline-primary">
           <i class="bi-arrow-left"></i>
         </a>
 
         <!-- Page Links -->
-        <a href="#" class="btn btn-outline-primary">9</a>
-        <a href="#" class="btn btn-primary">10</a>
-        <a href="#" class="btn btn-outline-primary">11</a>
+        @for (item of links(); track $index) {
+          <a (click)="clickLink(item)" class="btn btn-outline-primary">{{item + 1}}</a>
+        }
 
         <!-- Last Page -->
-        <a href="#" class="btn btn-outline-primary">
+        <a (click)="clickLink(lastPage())" class="btn btn-outline-primary">
           <i class="bi-arrow-right"></i>
         </a>
 
@@ -39,14 +39,14 @@
       <div class="col">
         <div class="input-group">
           <span class="input-group-text">Pages</span>
-          <span class="form-control">20</span>
+          <span class="form-control">{{pageInfo()?.totalPage || 0}}</span>
         </div>
       </div>
 
       <div class="col">
         <div class="input-group">
           <span class="input-group-text">Count</span>
-          <span class="form-control">198</span>
+          <span class="form-control">{{pageInfo()?.totalCount || 0}}</span>
         </div>
       </div>
     </div>

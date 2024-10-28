@@ -3,7 +3,7 @@
     <form [formGroup]="form" class="modal-content">
 
       <div class="modal-header">
-        <h5 class="modal-title">Edit Ledger</h5>
+        <h5 class="modal-title">{{update() ? 'Edit' : 'Add New'}} Ledger</h5>
       </div>
 
       <div class="modal-body">
@@ -25,7 +25,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">
+        <button (click)="save()" type="button" class="btn btn-primary">
           <i class="bi-save"></i> Save
         </button>
       </div>
