@@ -1,5 +1,7 @@
 package com.jdc.balance.model.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,7 @@ import com.jdc.balance.security.JwtTokenProvider.Type;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AccountSecurityService {
 	
@@ -29,7 +32,6 @@ public class AccountSecurityService {
 	private final AccountRepo accountRepo;
 	private final PasswordEncoder passwordEncoder;
 
-	@Transactional
 	public SecurityInfo chagePassword(ChangePasswordForm form) {
 		
 		var account = accountRepo.findById(form.username())
@@ -45,7 +47,6 @@ public class AccountSecurityService {
 		return getResult(account, authentication);
 	}
 
-	@Transactional
 	public SecurityInfo signUp(SignUpForm form) {
 		
 		if(accountRepo.findById(form.username()).isPresent()) {
@@ -67,6 +68,10 @@ public class AccountSecurityService {
 		var account = accountRepo.findById(form.username())
 				.orElseThrow(() -> new ApiBusinessException("Invalid username."));
 		
+		if(account.getActivity() != null) {
+			account.getActivity().setLastAccess(LocalDateTime.now());
+		}
+		
 		return getResult(account, authentication);
 	}
 
@@ -77,6 +82,10 @@ public class AccountSecurityService {
 		var account = accountRepo.findById(authentication.getName())
 				.orElseThrow(() -> new ApiBusinessException("Invalid username."));
 		
+		if(account.getActivity() != null) {
+			account.getActivity().setLastAccess(LocalDateTime.now());
+		}
+
 		return getResult(account, authentication);
 	}
 	

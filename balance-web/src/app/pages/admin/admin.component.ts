@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PageInfo } from '../../services/commons';
 import { AccountManagementService } from '../../services/api/account-management.service';
 import { PagerComponent } from '../../widgets/pagination/pagination.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -22,6 +23,7 @@ export class AdminComponent implements PagerComponent{
   constructor(
     builder:FormBuilder,
     private service:AccountManagementService,
+    private router:Router,
     private loginUser:LoginUserState) {
       this.form = builder.group({
         entryFrom: '',
@@ -54,5 +56,6 @@ export class AdminComponent implements PagerComponent{
 
   signOut() {
     this.loginUser.signOut()
+    this.router.navigate(['/anonymous'])
   }
 }

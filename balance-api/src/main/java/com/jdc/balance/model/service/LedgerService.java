@@ -36,7 +36,10 @@ public class LedgerService {
 					var root = cq.from(LedgerAccount.class);
 					LedgerListItem.select(cb, cq, root);
 					cq.where(search.where(cb, root, loginUserService.getLoginUser()));
-					cq.orderBy(cb.asc(root.get(LedgerAccount_.id).get(LedgerAccountPk_.seqNumber)));
+					cq.orderBy(
+						cb.asc(root.get(LedgerAccount_.id).get(LedgerAccountPk_.type)),
+						cb.asc(root.get(LedgerAccount_.id).get(LedgerAccountPk_.seqNumber))
+					);
 					return cq;
 				}, 
 				cb -> {
