@@ -1,25 +1,14 @@
 <app-page-content icon="bi-house" title="Balance Management System">
 
   <div class="row mt-4">
-    <app-summary-info class="col" title="Last Debit" [value]="0"></app-summary-info>
-    <app-summary-info class="col" title="Last Credit" [value]="0"></app-summary-info>
-    <app-summary-info class="col" title="Total Debit" [value]="0"></app-summary-info>
-    <app-summary-info class="col" title="Total Credit" [value]="0"></app-summary-info>
-    <app-summary-info class="col" title="Total Balance" [value]="0"></app-summary-info>
+    <app-summary-info class="col" title="Last Debit" [value]="summary()?.lastDebit || 0"></app-summary-info>
+    <app-summary-info class="col" title="Last Credit" [value]="summary()?.lastCredit || 0"></app-summary-info>
+    <app-summary-info class="col" title="Total Debit" [value]="summary()?.totalDebit || 0"></app-summary-info>
+    <app-summary-info class="col" title="Total Credit" [value]="summary()?.totalCredit || 0"></app-summary-info>
+    <app-summary-info class="col" title="Total Balance" [value]="summary()?.totalBalance || 0"></app-summary-info>
   </div>
 
-  <div class="row mt-4">
-    <div class="col">
-
-    </div>
-
-    <div class="col-4">
-      <div class="mb-4">
-        <app-top-ledgers title="Top Debit Ledgers" [ledgers]="[]"></app-top-ledgers>
-      </div>
-      <div class="mb-4">
-        <app-top-ledgers title="Top Credit Ledgers" [ledgers]="[]"></app-top-ledgers>
-      </div>
-    </div>
+  <div class="mt-4">
+    <div id="chartdiv"></div>
   </div>
 </app-page-content>
