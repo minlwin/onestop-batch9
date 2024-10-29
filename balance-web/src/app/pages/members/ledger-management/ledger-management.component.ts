@@ -65,11 +65,11 @@ export class LedgerManagementComponent implements PagerComponent{
   }
 
   save(form:any) {
+    this.editComponent()?.hide()
     const request = this.code() != undefined ? this.service.update(this.code()!, form)
       : this.service.create(form)
 
     request.subscribe((_) => {
-      this.editComponent()?.hide()
       this.search()
     })
   }

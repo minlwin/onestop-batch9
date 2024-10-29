@@ -34,8 +34,8 @@ public class BalanceReportService {
 			cq.where(search.where(cb, root, loginUser.getEmail()));
 			
 			cq.orderBy(
-				cb.desc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.entryDate)),
-				cb.desc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.seqNumber))
+				cb.asc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.entryDate)),
+				cb.asc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.seqNumber))
 			);
 			
 			return cq;

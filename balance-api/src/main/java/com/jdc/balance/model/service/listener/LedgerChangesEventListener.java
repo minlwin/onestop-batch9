@@ -24,7 +24,7 @@ public class LedgerChangesEventListener {
 	@Transactional
 	public void handle(LedgerChangesEvent event) {
 		
-		ledgerRepo.findById(event.code()).ifPresent(ledger -> {
+		ledgerRepo.findById(event.id()).ifPresent(ledger -> {
 			var account = ledger.getAccount();
 			Long ledgerCount = findCountByAccount(account);
 			account.getActivity().setTotalLedgers(ledgerCount.intValue());
@@ -37,7 +37,7 @@ public class LedgerChangesEventListener {
 			
 			var root = cq.from(LedgerAccount.class);
 	
-			cq.select(cb.count(root.get(LedgerAccount_.code)));
+			cq.select(cb.count(root.get(LedgerAccount_.id)));
 			cq.where(cb.equal(root.get(LedgerAccount_.account).get(Account_.email), account.getEmail()));
 			
 			return cq;

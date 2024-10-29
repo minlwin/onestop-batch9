@@ -49,7 +49,7 @@ public class LedgerManagementApi {
 			@Validated @RequestBody LedgerEditForm form, BindingResult result) {
 		var modificationResult = service.create(form);
 		publisher.publishEvent(new LedgerChangesEvent(modificationResult.id()));
-		return modificationResult;
+		return modificationResult.map(a -> a.getCode());
 	}
 	
 	@PutMapping("{code}")
@@ -57,6 +57,6 @@ public class LedgerManagementApi {
 			@Validated @RequestBody LedgerUpdateForm form, BindingResult result) {
 		var modificationResult = service.update(code, form);
 		publisher.publishEvent(new LedgerChangesEvent(modificationResult.id()));
-		return modificationResult;
+		return modificationResult.map(a -> a.getCode());
 	}
 }

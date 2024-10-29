@@ -43,7 +43,7 @@
         @for (item of contents(); track $index) {
           <tr>
             <td>{{item.issueAt}}</td>
-            <td>{{`${item.ledgerCode} : ${item.ledgerAccountName}}}</td>
+            <td>{{item.ledgerCode}} : {{item.ledgerAccountName}}</td>
             <td>{{item.particular}}</td>
             <td class="text-end">{{item.debit | number}}</td>
             <td class="text-end">{{item.credit | number}}</td>
@@ -58,6 +58,6 @@
     </div>
   }
   <!-- Pagination -->
-  <app-pagination [pageInfo]="pageInfo()"></app-pagination>
+  <app-pagination [pageInfo]="pageInfo()" (onLinkChange)="onLinkChange($event)" (onSizeChange)="onSizeChange($event)" ></app-pagination>
 
 </app-page-content>

@@ -1,55 +1,54 @@
-@if (show()) {
+<section class="d-flex justify-content-between">
 
-  <section class="d-flex justify-content-between">
-
-    <div class="row">
-      <div class="col-auto">
-        <!-- Page Select -->
-        <div class="input-group">
-          <span class="input-group-text">Page Size</span>
-          <select #sizeSelect (change)="changeSize(sizeSelect.value)" class="form-select">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="col page-links">
-        <!-- Top Page -->
-        <a (click)="clickLink(0)" class="btn btn-outline-primary">
-          <i class="bi-arrow-left"></i>
-        </a>
-
-        <!-- Page Links -->
-        @for (item of links(); track $index) {
-          <a (click)="clickLink(item)" class="btn btn-outline-primary">{{item + 1}}</a>
-        }
-
-        <!-- Last Page -->
-        <a (click)="clickLink(lastPage())" class="btn btn-outline-primary">
-          <i class="bi-arrow-right"></i>
-        </a>
-
+  <div class="row">
+    <div class="col-auto">
+      <!-- Page Select -->
+      <div class="input-group">
+        <span class="input-group-text">Page Size</span>
+        <select #sizeSelect (change)="changeSize(sizeSelect.value)" class="form-select">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
       </div>
     </div>
 
-    <div class="row gx-2">
-      <!-- Total Page / Total Count -->
-      <div class="col">
-        <div class="input-group">
-          <span class="input-group-text">Pages</span>
-          <span class="form-control">{{pageInfo()?.totalPage || 0}}</span>
-        </div>
-      </div>
+    <div class="col page-links">
+      <!-- Top Page -->
+      <a (click)="clickLink(0)" class="btn btn-outline-primary">
+        <i class="bi-arrow-left"></i>
+      </a>
 
-      <div class="col">
-        <div class="input-group">
-          <span class="input-group-text">Count</span>
-          <span class="form-control">{{pageInfo()?.totalCount || 0}}</span>
-        </div>
+      <!-- Page Links -->
+      @for (item of links(); track $index) {
+        <a (click)="clickLink(item)" class="btn"
+          [class.btn-primary]="item == current()"
+          [class.btn-outline-primary]="item != current()">{{item + 1}}</a>
+      }
+
+      <!-- Last Page -->
+      <a (click)="clickLink(lastPage())" class="btn btn-outline-primary">
+        <i class="bi-arrow-right"></i>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="row gx-2">
+    <!-- Total Page / Total Count -->
+    <div class="col">
+      <div class="input-group">
+        <span class="input-group-text">Pages</span>
+        <span class="form-control">{{pageInfo()?.totalPage || 0}}</span>
       </div>
     </div>
 
-  </section>
-}
+    <div class="col">
+      <div class="input-group">
+        <span class="input-group-text">Count</span>
+        <span class="form-control">{{pageInfo()?.totalCount || 0}}</span>
+      </div>
+    </div>
+  </div>
+
+</section>

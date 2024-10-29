@@ -3,6 +3,7 @@ import { WidgetsModule } from '../../../widgets/widgets.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangePasswordService } from '../../../services/api/change-password.service';
 import { LoginUserState } from '../../../services/security/login-user.state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
@@ -16,6 +17,7 @@ export class ChangePasswordComponent {
   form:FormGroup
 
   constructor(builder:FormBuilder,
+    private router:Router,
     private loginUser:LoginUserState,
     private service:ChangePasswordService) {
     this.form = builder.group({
@@ -29,6 +31,7 @@ export class ChangePasswordComponent {
     if(this.form.valid) {
       this.service.changePassword(this.form.value).subscribe(result => {
         this.loginUser.setUser(result)
+        this.router.navigate(['/members'])
       })
     }
   }

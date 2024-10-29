@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.jdc.balance.model.entity.LedgerAccount.LedgerType;
+import com.jdc.balance.model.entity.LedgerAccountPk;
 import com.jdc.balance.model.entity.LedgerAccount_;
 import com.jdc.balance.model.entity.LedgerEntry;
 import com.jdc.balance.model.entity.LedgerEntry_;
@@ -13,19 +14,29 @@ import jakarta.persistence.criteria.Root;
 
 public record BalanceReportInfo(
 		LocalDate issueAt,
+		LedgerType type,
 		String ledgerCode,
 		String ledgerAccountName,
-		LedgerType type,
 		String particular,
 		BigDecimal amount,
 		BigDecimal lastBalance) {
 	
+	public BalanceReportInfo(
+			LocalDate issueAt,
+			LedgerAccountPk ledger,
+			String ledgerAccountName,
+			String particular,
+			BigDecimal amount,
+			BigDecimal lastBalance) {
+		
+		this(issueAt, ledger.getType(), ledger.getCode(), ledgerAccountName, particular, amount, lastBalance);
+	}
+	
 	public static void select(CriteriaQuery<BalanceReportInfo> cq, Root<LedgerEntry> root) {
 		cq.multiselect(
 			root.get(LedgerEntry_.issueAt),
-			root.get(LedgerEntry_.ledger).get(LedgerAccount_.code),
+			root.get(LedgerEntry_.ledger).get(LedgerAccount_.id),
 			root.get(LedgerEntry_.ledger).get(LedgerAccount_.ledger),
-			root.get(LedgerEntry_.ledger).get(LedgerAccount_.type),
 			root.get(LedgerEntry_.particular),
 			root.get(LedgerEntry_.totalAmount),
 			root.get(LedgerEntry_.lastBalance)

@@ -62,7 +62,7 @@
 
 
   <!-- Pagination -->
-  <app-pagination [pageInfo]="pageInfo()"></app-pagination>
+  <app-pagination [pageInfo]="pageInfo()" (onLinkChange)="onLinkChange($event)" (onSizeChange)="onSizeChange($event)" ></app-pagination>
 
   <app-ledger-edit (onSave)="save($event)"></app-ledger-edit>
 

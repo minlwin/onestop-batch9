@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.jdc.balance.model.entity.LedgerAccount.LedgerType;
+import com.jdc.balance.model.entity.LedgerAccountPk_;
 import com.jdc.balance.model.entity.LedgerAccount_;
 import com.jdc.balance.model.entity.LedgerEntry;
 import com.jdc.balance.model.entity.LedgerEntryPk_;
@@ -27,7 +28,7 @@ public record LedgerEntrySearch(
 		var list = new ArrayList<Predicate>();
 		
 		list.add(cb.equal(root.get(LedgerEntry_.id).get(LedgerEntryPk_.accountId), accountId));
-		list.add(cb.equal(root.get(LedgerEntry_.ledger).get(LedgerAccount_.type), type));
+		list.add(cb.equal(root.get(LedgerEntry_.ledger).get(LedgerAccount_.id).get(LedgerAccountPk_.type), type));
 		
 		if(null != from) {
 			list.add(cb.greaterThanOrEqualTo(root.get(LedgerEntry_.issueAt), from));
@@ -38,10 +39,7 @@ public record LedgerEntrySearch(
 		}
 		
 		if(StringUtils.hasLength(ledger)) {
-			list.add(cb.or(
-				cb.like(cb.lower(root.get(LedgerEntry_.ledger).get(LedgerAccount_.code)), ledger.toLowerCase().concat("%")),
-				cb.like(cb.lower(root.get(LedgerEntry_.ledger).get(LedgerAccount_.ledger)), ledger.toLowerCase().concat("%"))
-			));
+			list.add(cb.like(cb.lower(root.get(LedgerEntry_.ledger).get(LedgerAccount_.ledger)), ledger.toLowerCase().concat("%")));
 		}
 
 		return list.toArray(size -> new Predicate[size]);

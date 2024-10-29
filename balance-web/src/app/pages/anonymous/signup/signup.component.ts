@@ -31,7 +31,7 @@ export class SignupComponent {
     if(this.form.valid) {
       this.security.signUp(this.form.value).subscribe(result => {
         this.loginUser.setUser(result)
-        this.router.navigate(['/member'])
+        this.router.navigate(['/members'])
       })
     }
   }

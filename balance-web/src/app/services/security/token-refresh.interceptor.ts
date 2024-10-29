@@ -28,7 +28,7 @@ export const tokenRefreshInterceptor: HttpInterceptorFn = (req, next) => {
 
         if(e.status == 401) {
           loginUser.signOut()
-          return throwError(() => new NeedToLoginError(e))
+          throw new NeedToLoginError(e)
         }
       }
 

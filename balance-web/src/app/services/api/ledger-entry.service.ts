@@ -14,8 +14,8 @@ export class LedgerEntryService {
     return this.http.get<PageInfo>(`${URL}/${type}`, {params: form})
   }
 
-  findById(type:string, id:string) {
-    return this.http.get<any>(`${URL}/${type}/${id}`)
+  findById(id:string) {
+    return this.http.get<any>(`${URL}/details/${id}`)
   }
 
   create(type:string, form:any) {

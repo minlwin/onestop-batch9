@@ -16,6 +16,7 @@ import com.jdc.balance.api.output.PageInfo;
 import com.jdc.balance.exceptions.ApiBusinessException;
 import com.jdc.balance.model.LedgerEntrySeqGenerator;
 import com.jdc.balance.model.entity.LedgerAccount.LedgerType;
+import com.jdc.balance.model.entity.LedgerAccountPk;
 import com.jdc.balance.model.entity.LedgerEntry;
 import com.jdc.balance.model.entity.LedgerEntryItem;
 import com.jdc.balance.model.entity.LedgerEntryItemPk;
@@ -85,10 +86,10 @@ public class LedgerEntryService {
 	@Transactional
 	public DataModificationResult<LedgerEntryPk> create(LedgerEntryForm form) {
 		
-		var ledger = ledgerRepo.findById(form.ledgerCode())
+		var loginUser = loginUserService.getLoginUser();
+		var ledger = ledgerRepo.findById(LedgerAccountPk.from(loginUser, form.ledgerCode()))
 				.orElseThrow(() -> new ApiBusinessException("There is no ledger with code %s.".formatted(form.ledgerCode())));
 		
-		var loginUser = loginUserService.getLoginUser();
 		
 		if(!ledger.getAccount().getEmail().equals(loginUser.getEmail())) {
 			throw new ApiBusinessException("You have no permission to use this ledger code.");
@@ -106,7 +107,7 @@ public class LedgerEntryService {
 		
 		var lastBalance = loginUser.getBalance().getAmount();
 		
-		var updatedBalance = ledger.getType() == LedgerType.Credit ? 
+		var updatedBalance = ledger.getId().getType() == LedgerType.Credit ? 
 				lastBalance.add(new BigDecimal(total)) : 
 				lastBalance.subtract(new BigDecimal(total));
 		

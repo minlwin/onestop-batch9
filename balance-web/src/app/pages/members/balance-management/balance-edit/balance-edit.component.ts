@@ -1,7 +1,10 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { WidgetsModule } from '../../../../widgets/widgets.module';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LedgerEntryService } from '../../../../services/api/ledger-entry.service';
+import { Router } from '@angular/router';
+import { LedgerManagementService } from '../../../../services/api/ledger-management.service';
 
 @Component({
   selector: 'app-balance-edit',
@@ -19,9 +22,17 @@ export class BalanceEditComponent {
   subTitle = computed(() => `${this.type()} Entry`)
   title = computed(() => this.id() == undefined ? this.subTitle() : `Edit ${this.subTitle()}`)
 
+  ledgerCode = signal<string | undefined>(undefined)
+  ledger = signal<any>(undefined)
+
   form:FormGroup
 
-  constructor(private builder:FormBuilder) {
+  constructor(
+    private builder:FormBuilder,
+    private service:LedgerEntryService,
+    ledgerService:LedgerManagementService,
+    private router:Router
+  ) {
     this.form = builder.group({
       issueAt: ['', Validators.required],
       ledgerCode: ['', Validators.required],
@@ -30,6 +41,31 @@ export class BalanceEditComponent {
     })
 
     this.addItem()
+
+    effect(() => {
+
+      this.ledger.set(undefined)
+      const code = this.ledgerCode()
+
+      if(code) {
+
+        if(!this.type().startsWith(code.charAt(0))) {
+          throw {error : ["Invalid ledger code."]}
+        }
+
+        ledgerService.findById(code).subscribe(result => {
+          this.ledger.set(result)
+        })
+      }
+    }, {allowSignalWrites: true})
+  }
+
+  save() {
+    if(this.form.valid) {
+      this.service.create(this.type(), this.form.value).subscribe(result => {
+        this.router.navigate(['/members', 'management', 'details', result.id])
+      })
+    }
   }
 
   get items():FormArray {
@@ -38,7 +74,7 @@ export class BalanceEditComponent {
 
   addItem() {
     this.items.push(this.builder.group({
-      item: ['', Validators.required],
+      itemInfo: ['', Validators.required],
       unitPrice: [0, Validators.required],
       quantity: [0, Validators.required]
     }))

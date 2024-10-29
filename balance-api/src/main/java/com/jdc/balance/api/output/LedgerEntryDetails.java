@@ -21,8 +21,8 @@ public record LedgerEntryDetails(
 	public static LedgerEntryDetails from(LedgerEntry entity) {
 		return new LedgerEntryDetails(
 				entity.getId().getCode(), 
-				entity.getLedger().getType(), 
-				entity.getLedger().getCode(), 
+				entity.getLedger().getId().getType(), 
+				entity.getLedger().getId().getCode(), 
 				entity.getLedger().getLedger(), 
 				entity.getParticular(), 
 				entity.getIssueAt(), 

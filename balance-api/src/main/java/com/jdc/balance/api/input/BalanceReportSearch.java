@@ -32,10 +32,7 @@ public record BalanceReportSearch(
 		}
 		
 		if(StringUtils.hasLength(ledger)) {
-			list.add(cb.or(
-				cb.like(cb.lower(root.get(LedgerEntry_.ledger).get(LedgerAccount_.code)), ledger.toLowerCase().concat("%")),
-				cb.like(cb.lower(root.get(LedgerEntry_.ledger).get(LedgerAccount_.ledger)), ledger.toLowerCase().concat("%"))
-			));
+			list.add(cb.like(cb.lower(root.get(LedgerEntry_.ledger).get(LedgerAccount_.ledger)), ledger.toLowerCase().concat("%")));
 		}
 
 		return list.toArray(size -> new Predicate[size]);

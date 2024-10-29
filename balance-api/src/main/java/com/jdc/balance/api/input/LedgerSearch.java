@@ -9,6 +9,7 @@ import com.jdc.balance.model.entity.Account;
 import com.jdc.balance.model.entity.Account_;
 import com.jdc.balance.model.entity.LedgerAccount;
 import com.jdc.balance.model.entity.LedgerAccount.LedgerType;
+import com.jdc.balance.model.entity.LedgerAccountPk_;
 import com.jdc.balance.model.entity.LedgerAccount_;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -25,7 +26,7 @@ public record LedgerSearch(
 		list.add(cb.equal(root.get(LedgerAccount_.account).get(Account_.email), loginUser.getEmail()));
 		
 		if(null != type) {
-			list.add(cb.equal(root.get(LedgerAccount_.type), type));
+			list.add(cb.equal(root.get(LedgerAccount_.id).get(LedgerAccountPk_.type), type));
 		}
 		
 		if(StringUtils.hasLength(keyword)) {

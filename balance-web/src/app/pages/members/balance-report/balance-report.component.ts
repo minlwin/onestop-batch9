@@ -29,6 +29,8 @@ export class BalanceReportComponent implements PagerComponent{
       page: 0,
       size: 10
     })
+
+    this.search()
   }
 
   onLinkChange(page: number): void {
@@ -42,6 +44,8 @@ export class BalanceReportComponent implements PagerComponent{
   }
 
   search() {
-    this.service.search(this.form.value)
+    this.service.search(this.form.value).subscribe(result => {
+      this.pageInfo.set(result)
+    })
   }
 }

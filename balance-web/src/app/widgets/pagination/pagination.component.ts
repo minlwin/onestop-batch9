@@ -15,9 +15,9 @@ export class PaginationComponent {
   onSizeChange = new EventEmitter
 
   pageInfo = input<PageInfo | undefined>(undefined)
-  show = computed(() => (this.pageInfo()?.totalPage || 0) > 1)
   links = computed(() => this.pageInfo()?.links || [])
   lastPage = computed(() => (this.pageInfo()?.totalPage || 0) - 1)
+  current = computed(() => this.pageInfo()?.currentPage)
 
   clickLink(page:number) {
     this.onLinkChange.emit(page)

@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { WidgetsModule } from '../../../widgets/widgets.module';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -6,6 +6,7 @@ import { LedgerManagementService } from '../../../services/api/ledger-management
 import { PageInfo } from '../../../services/commons';
 import { CommonModule } from '@angular/common';
 import { PagerComponent } from '../../../widgets/pagination/pagination.component';
+import { LedgerEntryService } from '../../../services/api/ledger-entry.service';
 
 @Component({
   selector: 'app-balance-management',
@@ -25,7 +26,7 @@ export class BalanceManagementComponent implements PagerComponent {
 
   form:FormGroup
 
-  constructor(builder:FormBuilder, private service:LedgerManagementService) {
+  constructor(builder:FormBuilder, private service:LedgerEntryService) {
     this.form = builder.group({
       type: '',
       from: '',
@@ -34,6 +35,12 @@ export class BalanceManagementComponent implements PagerComponent {
       page: 0,
       size: 10
     })
+
+    effect(() => {
+      this.form.patchValue({type: this.type()})
+      this.search()
+    })
+
   }
 
   onLinkChange(page: number): void {
@@ -47,7 +54,7 @@ export class BalanceManagementComponent implements PagerComponent {
   }
 
   search() {
-    this.service.search(this.form.value).subscribe(result => {
+    this.service.search(this.type()!, this.form.value).subscribe(result => {
       this.pageInfo.set(result)
     })
   }

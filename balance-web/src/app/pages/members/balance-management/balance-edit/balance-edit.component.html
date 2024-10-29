@@ -5,22 +5,22 @@
     <div class="row">
       <!-- Issue At -->
       <app-form-group label="Issue At" class="col-3">
-        <input type="date" class="form-control">
+        <input formControlName="issueAt" type="date" class="form-control">
       </app-form-group>
 
       <!-- Ledger Code -->
       <app-form-group label="Ledger Code" class="col-3">
-        <input class="form-control" placeholder="Enter Ledger Code">
+        <input #ledgerCodeInput formControlName="ledgerCode" (change)="ledgerCode.set(ledgerCodeInput.value)" class="form-control" placeholder="Enter Ledger Code">
       </app-form-group>
 
       <!-- Account Name (Display Only) -->
       <app-form-group label="Ledger Acccount" class="col">
-        <span class="form-control">Please enter ledger code</span>
+        <span class="form-control">{{ledger()?.accountName || 'Invalid ledger code'}}</span>
       </app-form-group>
     </div>
 
     <app-form-group label="Particular">
-      <textarea placeholder="Enter particular information." class="form-control" cols="80" rows="2"></textarea>
+      <textarea formControlName="particular" placeholder="Enter particular information." class="form-control" cols="80" rows="2"></textarea>
     </app-form-group>
 
     <!-- Entry Items -->
@@ -35,7 +35,7 @@
               <button (click)="removeItem($index)" type="button" class="btn btn-outline-primary input-group-text">
                 <i class="bi bi-trash"></i>
               </button>
-              <input type="text" formControlName="item" class="form-control" placeholder="Enter Entry Info">
+              <input type="text" formControlName="itemInfo" class="form-control" placeholder="Enter Entry Info">
             </div>
           </app-form-group>
 
@@ -77,7 +77,7 @@
       </button>
 
       <!-- Save Button -->
-      <button type="button" class="btn btn-primary ms-2">
+      <button (click)="save()" [class.disabled]="!form.valid" type="button" class="btn btn-primary ms-2">
         <i class="bi-save"></i> Save
       </button>
     </div>

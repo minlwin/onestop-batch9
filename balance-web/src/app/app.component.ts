@@ -26,6 +26,7 @@ export class AppComponent implements AfterViewInit{
     private errorService:GlobalErrorService
   ) {
     effect(() => {
+
       if(this.needToLogin()) {
         router.navigate(['/anonymous'])
       }
@@ -37,6 +38,7 @@ export class AppComponent implements AfterViewInit{
       }
     })
   }
+
   ngAfterViewInit(): void {
     this.errorDialog = new bootstrap.Modal('#errorDialog')
   }

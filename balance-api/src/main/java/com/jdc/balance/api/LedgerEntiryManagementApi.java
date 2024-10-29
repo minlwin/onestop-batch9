@@ -25,25 +25,25 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("entry/{type}")
+@RequestMapping("entry")
 public class LedgerEntiryManagementApi {
 	
 	private final LedgerEntryService service;
 	private final ApplicationEventPublisher publisher;
 	
-	@GetMapping
+	@GetMapping("{type}")
 	PageInfo<LedgerEntryInfo> search(LedgerEntrySearch search,
 			@RequestParam(required = false, defaultValue = "0") int page,
 			@RequestParam(required = false, defaultValue = "10") int size) {
 		return service.search(search, page, size);
 	}
 	
-	@GetMapping("{trxId}")
+	@GetMapping("details/{trxId}")
 	LedgerEntryDetails findById(@PathVariable String trxId) {
 		return service.findById(trxId);
 	}
 	
-	@PostMapping
+	@PostMapping("{type}")
 	DataModificationResult<String> create(
 			@Validated @RequestBody LedgerEntryForm form, BindingResult result) {
 		

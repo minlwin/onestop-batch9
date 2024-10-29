@@ -1,5 +1,7 @@
 package com.jdc.balance.model.service.listener;
 
-public record LedgerChangesEvent(String code) {
+import com.jdc.balance.model.entity.LedgerAccountPk;
+
+public record LedgerChangesEvent(LedgerAccountPk id) {
 
 }

@@ -11,7 +11,10 @@ import com.jdc.balance.api.output.LedgerInfo;
 import com.jdc.balance.api.output.LedgerListItem;
 import com.jdc.balance.api.output.PageInfo;
 import com.jdc.balance.exceptions.ApiBusinessException;
+import com.jdc.balance.model.LedgerAccountSeqGenerator;
 import com.jdc.balance.model.entity.LedgerAccount;
+import com.jdc.balance.model.entity.LedgerAccountPk;
+import com.jdc.balance.model.entity.LedgerAccountPk_;
 import com.jdc.balance.model.entity.LedgerAccount_;
 import com.jdc.balance.model.repo.LedgerAccountRepo;
 
@@ -24,6 +27,7 @@ public class LedgerService {
 	
 	private final LedgerAccountRepo ledgerAccountRepo;
 	private final LoginUserService loginUserService;
+	private final LedgerAccountSeqGenerator idGenerator;
 
 	public PageInfo<LedgerListItem> search(LedgerSearch search, int page, int size) {
 		return PageInfo.from(ledgerAccountRepo.search(
@@ -32,13 +36,13 @@ public class LedgerService {
 					var root = cq.from(LedgerAccount.class);
 					LedgerListItem.select(cb, cq, root);
 					cq.where(search.where(cb, root, loginUserService.getLoginUser()));
-					cq.orderBy(cb.asc(root.get(LedgerAccount_.code)));
+					cq.orderBy(cb.asc(root.get(LedgerAccount_.id).get(LedgerAccountPk_.seqNumber)));
 					return cq;
 				}, 
 				cb -> {
 					var cq = cb.createQuery(Long.class);
 					var root = cq.from(LedgerAccount.class);
-					cq.select(cb.count(root.get(LedgerAccount_.code)));
+					cq.select(cb.count(root.get(LedgerAccount_.id)));
 					cq.where(search.where(cb, root, loginUserService.getLoginUser()));
 					return cq;
 				}, 
@@ -46,30 +50,30 @@ public class LedgerService {
 	}
 
 	public LedgerInfo findById(String code) {
-		return ledgerAccountRepo.findById(code)
+		return ledgerAccountRepo.findById(LedgerAccountPk.from(loginUserService.getLoginUser(), code))
 				.map(LedgerInfo::from)
 				.orElseThrow(() -> new ApiBusinessException("There is no ledger with code %s.".formatted(code)));
 	}
 
 	@Transactional
-	public DataModificationResult<String> create(LedgerEditForm form) {
+	public DataModificationResult<LedgerAccountPk> create(LedgerEditForm form) {
 		
-		if(ledgerAccountRepo.findById(form.code()).isPresent()) {
-			throw new ApiBusinessException("Ledger code is already used, please choose other codes.");
-		}
+		var loginUser = loginUserService.getLoginUser();
+		var entity = new LedgerAccount();
 		
-		var entity = form.entity();
-		entity.setAccount(loginUserService.getLoginUser());
+		entity.setId(idGenerator.next(loginUser.getEmail(), form.type()));
+		entity.setAccount(loginUser);
+		entity.setLedger(form.accountName());
 		
 		ledgerAccountRepo.save(entity);
 		
-		return DataModificationResult.success(entity.getCode(), "Ledger account is created successfully!");
+		return DataModificationResult.success(entity.getId(), "Ledger account is created successfully!");
 	}
 
 	@Transactional
-	public DataModificationResult<String> update(String code, LedgerUpdateForm form) {
+	public DataModificationResult<LedgerAccountPk> update(String code, LedgerUpdateForm form) {
 		
-		var entity = ledgerAccountRepo.findById(code)
+		var entity = ledgerAccountRepo.findById(LedgerAccountPk.from(loginUserService.getLoginUser(), code))
 				.orElseThrow(() -> new ApiBusinessException("There is no ledger with code %s.".formatted(code)));
 		
 		var loginUser = loginUserService.getLoginUser();
@@ -80,7 +84,7 @@ public class LedgerService {
 		
 		entity.setLedger(form.accountName());
 		
-		return DataModificationResult.success(entity.getCode(), "Ledger account is updated successfully!");
+		return DataModificationResult.success(entity.getId(), "Ledger account is updated successfully!");
 	}
 
 }

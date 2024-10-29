@@ -9,6 +9,6 @@ public record LedgerInfo(
 		String accountName) {
 
 	public static LedgerInfo from(LedgerAccount ledger) {
-		return new LedgerInfo(ledger.getType(), ledger.getCode(), ledger.getLedger());
+		return new LedgerInfo(ledger.getId().getType(), ledger.getId().getCode(), ledger.getLedger());
 	}
 }

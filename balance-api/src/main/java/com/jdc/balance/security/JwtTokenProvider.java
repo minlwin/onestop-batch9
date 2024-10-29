@@ -35,8 +35,8 @@ public class JwtTokenProvider {
 
 	public Authentication parse(String token, Type checkType) {
 
-		log.info("Token Type : {}", checkType);
-		log.info("Token Value : {}", token);
+		log.debug("Token Type : {}", checkType);
+		log.debug("Token Value : {}", token);
 
 		try {
 			if(StringUtils.hasLength(token)) {

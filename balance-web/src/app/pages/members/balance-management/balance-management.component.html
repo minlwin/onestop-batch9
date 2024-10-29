@@ -19,7 +19,7 @@
 
     <!-- Search Buttons -->
     <div class="col btn-wrapper">
-      <button type="button" class="btn btn-outline-primary">
+      <button (click)="search()" type="button" class="btn btn-outline-primary">
         <i class="bi-search"></i> Search
       </button>
 
@@ -69,6 +69,6 @@
   }
 
   <!-- Pagination -->
-  <app-pagination [pageInfo]="pageInfo()"></app-pagination>
+  <app-pagination [pageInfo]="pageInfo()" (onLinkChange)="onLinkChange($event)" (onSizeChange)="onSizeChange($event)" ></app-pagination>
 
 </app-page-content>

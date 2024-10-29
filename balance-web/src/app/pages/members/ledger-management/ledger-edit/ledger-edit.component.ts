@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Output, signal } from '@angular/core';
+import { AfterViewInit, Component, effect, EventEmitter, Output, signal } from '@angular/core';
 import { WidgetsModule } from '../../../../widgets/widgets.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -24,23 +24,30 @@ export class LedgerEditComponent implements AfterViewInit{
   constructor(builder:FormBuilder) {
     this.form = builder.group({
       type: ['', Validators.required],
-      code: ['', Validators.required],
       accountName: ['', Validators.required]
+    })
+
+    effect(() => {
+      if(this.update()) {
+        this.form.get("type")?.disable()
+      } else {
+        this.form.get("type")?.enable()
+      }
     })
   }
 
   show(data:any) {
     if(data) {
       this.form.patchValue(data)
+      this.update.set(true)
     } else {
       this.form.patchValue({
         type: '',
-        code: '',
         accountName: ''
       })
+      this.update.set(false)
     }
     this.dialog?.show()
-    this.update.set(data != undefined)
   }
 
   hide() {
