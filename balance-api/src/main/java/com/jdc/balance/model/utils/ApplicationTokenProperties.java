@@ -12,6 +12,7 @@ public class ApplicationTokenProperties {
 
 	private Life life = new Life();
 	private String issuer;
+	private String test;
 	
 	@Data
 	public static class Life {
